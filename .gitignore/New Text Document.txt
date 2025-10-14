@@ -1,0 +1,63 @@
+# ===============================
+# 🧠 Python + Jupyter + Data Project
+# ===============================
+
+# --- Python cache ---
+__pycache__
+.py[cod]
+.pyo
+.pyd
+
+# --- Virtual environments ---
+.env
+.venv
+env
+venv
+ENV
+env.bak
+venv.bak
+
+# --- Jupyter checkpoints ---
+.ipynb_checkpoints
+
+# --- Data folders  output ---
+Data
+Output
+Code__pycache__
+.csv
+.xlsx
+.xls
+.zip
+.pkl
+.h5
+.json
+
+# --- IDE & Editors ---
+.vscode
+.idea
+.swp
+.swo
+.bak
+
+# --- System files ---
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# --- Logs & temp ---
+.log
+.tmp
+
+# --- Model files ---
+.h5
+.hdf5
+.pkl
+.sav
+.joblib
+
+# --- Other ---
+.gif
+.mp4
+.png
+.jpg
+.jpeg
