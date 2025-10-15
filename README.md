@@ -2,78 +2,118 @@
 
 ## 📊 1. Dataset Description
 
-The dataset used in this project is **“Indicators of Heart Disease (2022 Update)”**.  
-It contains health-related information collected to identify patterns and factors that may increase the risk of heart disease.
+This project uses the **“Indicators of Heart Disease (2022 Update)”** dataset.  
+The dataset contains health-related information collected from U.S. adults to identify factors that may increase the risk of heart disease.
 
-- **Number of Rows:** 400K+
-- **Number of Columns:** 40 
-- **Source:** [Kaggle - Indicators of Heart Disease](https://www.kaggle.com)  
-- **Goal:** Analyze the data to identify factors correlated with heart disease and prepare it for further machine learning models.
+- **Number of Rows:** 445,132  
+- **Number of Columns:** 40  
+- **Source:** [Kaggle - Indicators of Heart Disease (2022)](https://www.kaggle.com)  
+- **Objective:** Analyze the dataset, clean and preprocess it, then prepare it for data visualization and predictive modeling.
 
-### 🧾 Features Overview:
-- `HeartDisease` → Target variable (Yes/No)  
-- `BMI` → Body Mass Index  
-- `Smoking` → Whether the person has smoked at least 100 cigarettes in their life  
-- `AlcoholDrinking` → Heavy drinker or not  
-- `Stroke` → Whether the person has ever had a stroke  
-- `PhysicalHealth`, `MentalHealth` → Number of unhealthy days in the past 30 days  
-- `DiffWalking` → Difficulty walking or climbing stairs  
-- `Sex` → Male or Female  
-- `AgeCategory` → Age group of the person  
-- `Race` → Ethnicity of the person  
-- `Diabetic` → Diabetic status  
-- `PhysicalActivity` → Physical activity or not  
-- `GenHealth` → General health status  
-- `SleepTime` → Average sleep time in hours  
-- `Asthma`, `KidneyDisease`, `SkinCancer` → Medical history indicators
+### 🧾 Feature Overview
+
+| Feature                          | Description |
+|-----------------------------------|-------------|
+| `State`                           | U.S. state of residence |
+| `Sex`                             | Biological sex of the participant |
+| `GeneralHealth`                   | Self-rated general health |
+| `PhysicalHealthDays`              | Number of days physical health was not good |
+| `MentalHealthDays`                | Number of days mental health was not good |
+| `LastCheckupTime`                 | Time since last routine checkup |
+| `PhysicalActivities`              | Whether the participant engaged in physical activities |
+| `SleepHours`                      | Average hours of sleep per night |
+| `RemovedTeeth`                    | Number of permanent teeth removed |
+| `HadHeartAttack`                  | History of heart attack (Yes/No) |
+| `HadAngina`                       | History of angina or coronary heart disease |
+| `HadStroke`                       | History of stroke |
+| `HadAsthma`                       | History of asthma |
+| `HadSkinCancer`                   | History of skin cancer |
+| `HadCOPD`                         | History of chronic obstructive pulmonary disease |
+| `HadDepressiveDisorder`           | History of depressive disorder |
+| `HadKidneyDisease`               | History of kidney disease |
+| `HadArthritis`                   | History of arthritis |
+| `HadDiabetes`                    | History of diabetes |
+| `DeafOrHardOfHearing`            | Hearing difficulties |
+| `BlindOrVisionDifficulty`       | Vision difficulties |
+| `DifficultyConcentrating`       | Difficulty concentrating or remembering |
+| `DifficultyWalking`             | Difficulty walking or climbing stairs |
+| `DifficultyDressingBathing`     | Difficulty dressing or bathing |
+| `DifficultyErrands`            | Difficulty doing errands alone |
+| `SmokerStatus`                 | Smoking status |
+| `ECigaretteUsage`              | E-cigarette usage |
+| `ChestScan`                    | History of chest CT scan |
+| `RaceEthnicityCategory`        | Race and ethnicity |
+| `AgeCategory`                  | Age group |
+| `HeightInMeters`              | Height in meters |
+| `WeightInKilograms`           | Weight in kilograms |
+| `BMI`                          | Body Mass Index |
+| `AlcoholDrinkers`             | Alcohol consumption |
+| `HIVTesting`                  | HIV testing status |
+| `FluVaxLast12`                | Flu vaccination in the last 12 months |
+| `PneumoVaxEver`               | Pneumococcal vaccination |
+| `TetanusLast10Tdap`           | Tetanus vaccination in the last 10 years |
+| `HighRiskLastYear`           | High risk for severe illness in the last year |
+| `CovidPos`                    | COVID-19 positivity status |
 
 ---
 
 ## 🧹 2. Step 1: Data Cleaning
 
-Data cleaning is an essential step to ensure the quality and consistency of the dataset.  
-The following actions were performed:
+Data cleaning ensures data quality, consistency, and reliability for analysis.  
+The following steps were applied:
 
 - **Handling Missing Values:**  
-  - Checked for null values and handled them appropriately (removal or imputation).
+  - Identified missing values across all columns.  
+  - Applied appropriate strategies (drop or impute) depending on data importance.
 
-- **Standardizing Text Values:**  
-  - Unified categorical values (e.g., `Yes` / `No`) and removed unnecessary spaces.
+- **Text Standardization:**  
+  - Unified categorical values (e.g., `Yes` / `No`) and removed extra spaces.  
+  - Normalized text casing.
 
-- **Removing Duplicates:**  
-  - Identified and dropped duplicate rows to avoid bias.
+- **Duplicate Removal:**  
+  - Checked for duplicate records and removed them to avoid redundancy.
 
-- **Checking Data Types:**  
-  - Converted numeric columns to their correct formats and categorical columns to categories.
+- **Data Type Conversion:**  
+  - Converted numeric columns like `HeightInMeters`, `WeightInKilograms`, `BMI`, and health day counts to numeric types.  
+  - Converted categorical variables to `category` type for optimization.
 
-- **Correcting Inconsistencies:**  
-  - Fixed typos, standardized labels, and cleaned string fields.
+- **Inconsistency Check:**  
+  - Fixed inconsistent values and ensured standardized labels across categorical fields.
 
 ---
 
 ## 📈 3. Step 2: Data Visualization & Preprocessing
 
 ### 🖼️ Data Visualization
-Exploratory analysis was conducted to understand data distribution and patterns:
 
-- Plotted **distribution of heart disease cases**.  
-- Explored relationships between **BMI**, **SleepTime**, and **AgeCategory** with heart disease.  
-- Visualized categorical variables (e.g., Smoking, Stroke) using bar plots and count plots.  
-- Detected and examined outliers using boxplots.
+To understand the data distribution and detect hidden patterns:
+
+- Plotted the **distribution of heart-related conditions** (`HadHeartAttack`, `HadAngina`, etc.).  
+- Explored relationships between **BMI**, **AgeCategory**, and **Sex** with heart disease indicators.  
+- Visualized **vaccination**, **smoking**, and **alcohol habits** impact on health indicators.  
+- Detected outliers in numerical features (`BMI`, `SleepHours`, `PhysicalHealthDays`) using boxplots.  
+- Checked data balance for key target variables.
 
 ### ⚙️ Data Preprocessing
-Prepared the dataset for further analysis and modeling:
 
-- **Encoding:** Applied One-Hot or Label Encoding to categorical variables.  
-- **Scaling:** Normalized/standardized numerical columns (BMI, SleepTime, etc.).  
-- **Balancing:** Addressed class imbalance if necessary.  
-- **Splitting:** Divided the dataset into training and testing sets.
+Prepared the dataset for modeling:
 
----
+- **Encoding:**  
+  - Transformed categorical columns into numeric format using One-Hot Encoding or Label Encoding.
 
+- **Scaling:**  
+  - Standardized numerical columns to improve model performance.
 
+- **Balancing:**  
+  - Addressed class imbalance for target features like `HadHeartAttack` if necessary.
+
+- **Splitting:**  
+  - Divided data into training and testing sets for future predictive modeling.
+
+--
 
 ## 🛠️ Tools & Libraries
+
 - [Python](https://www.python.org/)  
 - [Pandas](https://pandas.pydata.org/)  
 - [NumPy](https://numpy.org/)  
@@ -81,7 +121,8 @@ Prepared the dataset for further analysis and modeling:
 - [Seaborn](https://seaborn.pydata.org/)  
 - [Scikit-learn](https://scikit-learn.org/)
 
----
+--
+
 
 ## 📌 Team
 **Ahmed Sameh**  
