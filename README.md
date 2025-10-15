@@ -71,12 +71,7 @@ Prepared the dataset for further analysis and modeling:
 
 ---
 
-## 🚀 Next Steps
-- Build predictive models (e.g., Logistic Regression, Random Forest, XGBoost).  
-- Evaluate model performance using accuracy, precision, recall, and AUC.  
-- Visualize and communicate insights through dashboards.
 
----
 
 ## 🛠️ Tools & Libraries
 - [Python](https://www.python.org/)  
@@ -88,8 +83,10 @@ Prepared the dataset for further analysis and modeling:
 
 ---
 
-## 📌 Author
-**Your Name**  
-📧 your.email@example.com  
-💼 [LinkedIn](https://www.linkedin.com) • 🐙 [GitHub](https://github.com)
+## 📌 Team
+**Ahmed Sameh**  
+**Abdullah Ahmed**  
+**Mohamed Yasser**  
+**Rewan Adel**  
+
 
