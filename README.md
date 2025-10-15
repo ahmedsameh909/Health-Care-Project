@@ -1,13 +1,95 @@
-🫀 Healthcare Project: Indicators of Heart Disease (2022 Update)
-📊 1. Dataset Description
+# 🫀 Healthcare Project: Indicators of Heart Disease (2022 Update)
 
-The dataset used in this project is “Indicators of Heart Disease (2022 Update)”.
+## 📊 1. Dataset Description
+
+The dataset used in this project is **“Indicators of Heart Disease (2022 Update)”**.  
 It contains health-related information collected to identify patterns and factors that may increase the risk of heart disease.
 
-Number of Rows: 319,795
+- **Number of Rows:** 319,795  
+- **Number of Columns:** 18  
+- **Source:** [Kaggle - Indicators of Heart Disease](https://www.kaggle.com)  
+- **Goal:** Analyze the data to identify factors correlated with heart disease and prepare it for further machine learning models.
 
-Number of Columns: 18
+### 🧾 Features Overview:
+- `HeartDisease` → Target variable (Yes/No)  
+- `BMI` → Body Mass Index  
+- `Smoking` → Whether the person has smoked at least 100 cigarettes in their life  
+- `AlcoholDrinking` → Heavy drinker or not  
+- `Stroke` → Whether the person has ever had a stroke  
+- `PhysicalHealth`, `MentalHealth` → Number of unhealthy days in the past 30 days  
+- `DiffWalking` → Difficulty walking or climbing stairs  
+- `Sex` → Male or Female  
+- `AgeCategory` → Age group of the person  
+- `Race` → Ethnicity of the person  
+- `Diabetic` → Diabetic status  
+- `PhysicalActivity` → Physical activity or not  
+- `GenHealth` → General health status  
+- `SleepTime` → Average sleep time in hours  
+- `Asthma`, `KidneyDisease`, `SkinCancer` → Medical history indicators
 
-Source: Kaggle - Indicators of Heart Disease
+---
 
-Goal: Analyze the data to identify factors correlated with heart disease and prepare it for further machine learning models.
+## 🧹 2. Step 1: Data Cleaning
+
+Data cleaning is an essential step to ensure the quality and consistency of the dataset.  
+The following actions were performed:
+
+- **Handling Missing Values:**  
+  - Checked for null values and handled them appropriately (removal or imputation).
+
+- **Standardizing Text Values:**  
+  - Unified categorical values (e.g., `Yes` / `No`) and removed unnecessary spaces.
+
+- **Removing Duplicates:**  
+  - Identified and dropped duplicate rows to avoid bias.
+
+- **Checking Data Types:**  
+  - Converted numeric columns to their correct formats and categorical columns to categories.
+
+- **Correcting Inconsistencies:**  
+  - Fixed typos, standardized labels, and cleaned string fields.
+
+---
+
+## 📈 3. Step 2: Data Visualization & Preprocessing
+
+### 🖼️ Data Visualization
+Exploratory analysis was conducted to understand data distribution and patterns:
+
+- Plotted **distribution of heart disease cases**.  
+- Explored relationships between **BMI**, **SleepTime**, and **AgeCategory** with heart disease.  
+- Visualized categorical variables (e.g., Smoking, Stroke) using bar plots and count plots.  
+- Detected and examined outliers using boxplots.
+
+### ⚙️ Data Preprocessing
+Prepared the dataset for further analysis and modeling:
+
+- **Encoding:** Applied One-Hot or Label Encoding to categorical variables.  
+- **Scaling:** Normalized/standardized numerical columns (BMI, SleepTime, etc.).  
+- **Balancing:** Addressed class imbalance if necessary.  
+- **Splitting:** Divided the dataset into training and testing sets.
+
+---
+
+## 🚀 Next Steps
+- Build predictive models (e.g., Logistic Regression, Random Forest, XGBoost).  
+- Evaluate model performance using accuracy, precision, recall, and AUC.  
+- Visualize and communicate insights through dashboards.
+
+---
+
+## 🛠️ Tools & Libraries
+- [Python](https://www.python.org/)  
+- [Pandas](https://pandas.pydata.org/)  
+- [NumPy](https://numpy.org/)  
+- [Matplotlib](https://matplotlib.org/)  
+- [Seaborn](https://seaborn.pydata.org/)  
+- [Scikit-learn](https://scikit-learn.org/)
+
+---
+
+## 📌 Author
+**Your Name**  
+📧 your.email@example.com  
+💼 [LinkedIn](https://www.linkedin.com) • 🐙 [GitHub](https://github.com)
+
