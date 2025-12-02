@@ -12,7 +12,7 @@ try:
 except:
     HAVE_GENAI = False
 
-GENAI_API_KEY = os.getenv("GENAI_API_KEY", "AIzaSyAxcv9vIvO0MfPLjzZ290JDBP3CdcOKA6w")
+GENAI_API_KEY = os.getenv("GENAI_API_KEY", "AIzaSyC8WlNuRi9SAwRdFBOxmbU_EKj2Hses9rY")
 if GENAI_API_KEY and HAVE_GENAI:
     try:
         client = genai.Client(api_key=GENAI_API_KEY)
@@ -99,17 +99,19 @@ def rerun():
 with st.sidebar:
     st.header("💬 AI Health Assistant")
 
-    # Initialize chat history
+    # Initialize chat state
     if "chat_history" not in st.session_state:
         st.session_state.chat_history = []
     if "ai_input_box" not in st.session_state:
         st.session_state.ai_input_box = "" 
 
-    # Function to handle sending message
+    # Function to send user message
     def send_message():
         user_msg = st.session_state.ai_input_box.strip()
         if not user_msg:
             return
+
+        # Generate AI response
         if ai_enabled:
             with st.spinner("🤖 AI is thinking..."):
                 try:
@@ -126,15 +128,18 @@ with st.sidebar:
                         ai_text = response.text
                     except:
                         ai_text = "".join([p.text for p in response.candidates[0].content.parts])
-                except Exception:
+                except:
                     ai_text = "⚠️ AI request failed or returned no text."
         else:
             ai_text = "⚠️ AI assistant is disabled."
 
-        st.session_state.chat_history.append([user_msg, ai_text])
+        # Store chat as dictionary
+        st.session_state.chat_history.append(
+            {"user": user_msg, "ai": ai_text}
+        )
         st.session_state.ai_input_box = ""  # clear input
 
-    # Fixed suggested questions
+    # Suggested questions
     st.markdown("**💡 Quick Questions:**")
     fixed_questions = [
         "What are the symptoms of heart disease?",
@@ -144,36 +149,39 @@ with st.sidebar:
         "How often should I get a heart checkup?"
     ]
 
-    # When user clicks a suggested question
     for i, q in enumerate(fixed_questions):
         if st.button(q, key=f"suggest_{i}"):
             st.session_state.ai_input_box = q
             send_message()
-            rerun()  
+            st.rerun()
 
-    # User input box with on_change (Enter triggers send_message)
+    # Input box (Enter sends message)
     st.text_input(
-        "Type your question:", 
+        "Type your question:",
         key="ai_input_box",
         value=st.session_state.ai_input_box,
         placeholder="E.g., What is a healthy BMI?",
         on_change=send_message
     )
+        # Clear chat button
+    if st.button("Clear Chat"):
+        st.session_state.chat_history = []
+        st.rerun()
 
-    # Display chat history in WhatsApp style (latest first)
-    st.markdown("---")
-    for user_msg, ai_msg in reversed(st.session_state.chat_history):
-        st.markdown(f"""
-        <div style='background:#DCF8C6; padding:8px 12px; border-radius:12px; margin-bottom:5px;'>
-            <strong> You:</strong> {user_msg}
-        </div>
-        """, unsafe_allow_html=True)
+    # Chat history
+    st.markdown("### 💬 Chat History")
+    chat_container = st.container()
 
-        st.markdown(f"""
-        <div style='background:#FFF; padding:8px 12px; border-radius:12px; margin-bottom:10px;'>
-            <strong>🤖 AI:</strong> {ai_msg}
-        </div>
-        """, unsafe_allow_html=True)
+    with chat_container:
+        for msg in st.session_state.chat_history:
+            st.markdown(
+                f"<div class='chat-user'><strong>You:</strong> {msg['user']}</div>",
+                unsafe_allow_html=True
+            )
+            st.markdown(
+                f"<div class='chat-ai'><strong>🤖 AI:</strong> {msg['ai']}</div>",
+                unsafe_allow_html=True
+            )
 
 
 
@@ -278,60 +286,60 @@ with tab1:
     st.dataframe(input_df)
 
  # ----------------- Prediction & AI -----------------
-prediction = 0
-prob = None
-ai_input = ""
+    prediction = 0
+    prob = None
+    ai_input = ""
 
-if st.button("Predict Heart Attack"):
-    if model is None:
-        st.error("Model not loaded.")
-    else:
-        input_data = pd.DataFrame([{c:data[c] for c in required_columns}])
-        try:
-            prediction = model.predict(input_data)[0]
-            if hasattr(model, "predict_proba"):
-                prob = model.predict_proba(input_data)[0][1]
-        except Exception as e:
-            st.error("Prediction failed.")
-            st.exception(e)
-
-        # Display risk
-        if prediction == 1:
-            st.error("❗ High Risk Detected — You may be at risk of a heart attack.")
-            if prob is not None:
-                st.info(f"Predicted probability of risk: {prob:.3f}")
-            ai_input = f"I am at high risk of a heart attack. What lifestyle changes and precautions should I consider to reduce my risk?"
+    if st.button("Predict Heart Attack"):
+        if model is None:
+            st.error("Model not loaded.")
         else:
-            st.success("💚 You are not at risk based on the model.")
-            if prob is not None:
-                st.info(f"Predicted probability of risk: {prob:.3f}")
-            ai_input = f"I am not at risk of a heart attack. What lifestyle habits should I maintain to keep my heart healthy?"
+            input_data = pd.DataFrame([{c:data[c] for c in required_columns}])
+            try:
+                prediction = model.predict(input_data)[0]
+                if hasattr(model, "predict_proba"):
+                    prob = model.predict_proba(input_data)[0][1]
+            except Exception as e:
+                st.error("Prediction failed.")
+                st.exception(e)
 
-        # Call AI assistant if enabled
-        if ai_enabled and ai_input:
-            with st.spinner("🤖 AI is thinking..."):
-                try:
-                    system_prompt = """
-                            You are a professional AI health assistant. 
-                            Answer user questions strictly about medical, health, and lifestyle topics.
-                            Always provide accurate, evidence-based information.
-                            Do NOT give advice outside of health or medical context.
-                                """
+            # Display risk
+            if prediction == 1:
+                st.error("❗ High Risk Detected — You may be at risk of a heart attack.")
+                if prob is not None:
+                    st.info(f"Predicted probability of risk: {prob:.3f}")
+                ai_input = f"I am at high risk of a heart attack. What lifestyle changes and precautions should I consider to reduce my risk?"
+            else:
+                st.success("💚 You are not at risk based on the model.")
+                if prob is not None:
+                    st.info(f"Predicted probability of risk: {prob:.3f}")
+                ai_input = f"I am not at risk of a heart attack. What lifestyle habits should I maintain to keep my heart healthy?"
 
-                    user_question = ai_input 
-
-                    full_prompt = f"{system_prompt}\n\nUser question: {user_question}"
-
-                    response = client.models.generate_content(model="models/gemini-2.5-flash",contents=full_prompt)
-                    ai_text = response.text
-
+            # Call AI assistant if enabled
+            if ai_enabled and ai_input:
+                with st.spinner("🤖 AI is thinking..."):
                     try:
+                        system_prompt = """
+                                You are a professional AI health assistant. 
+                                Answer user questions strictly about medical, health, and lifestyle topics.
+                                Always provide accurate, evidence-based information.
+                                Do NOT give advice outside of health or medical context.
+                                    """
+
+                        user_question = ai_input 
+
+                        full_prompt = f"{system_prompt}\n\nUser question: {user_question}"
+
+                        response = client.models.generate_content(model="models/gemini-2.5-flash",contents=full_prompt)
                         ai_text = response.text
-                    except:
-                        ai_text = "".join([p.text for p in response.candidates[0].content.parts])
-                except Exception:
-                    ai_text = "AI request failed or returned no text."
-            st.markdown(f"<span style='color:white; padding:10px;'>**🤖 AI Assistant:** {ai_text}</span>", unsafe_allow_html=True)
+
+                        try:
+                            ai_text = response.text
+                        except:
+                            ai_text = "".join([p.text for p in response.candidates[0].content.parts])
+                    except Exception:
+                        ai_text = "AI request failed or returned no text."
+                st.markdown(f"<span style='color:white; padding:10px;'>**🤖 AI Assistant:** {ai_text}</span>", unsafe_allow_html=True)
 
 
 # ---------------- Batch CSV prediction ----------------
@@ -418,3 +426,38 @@ st.markdown(
     <div class="footer">👨‍💻 Developed by our team</div>
     """,
     unsafe_allow_html=True)
+st.markdown("""
+<style>
+
+:root {
+    --chat-user-bg: #4caf50; 
+    --chat-user-text: white;
+
+    --chat-ai-bg: rgba(255,255,255,0.1);
+    --chat-ai-text: var(--text-color);
+}
+
+/* User bubble */
+.chat-user {
+    background: var(--chat-user-bg);
+    color: var(--chat-user-text);
+    padding: 10px 14px;
+    border-radius: 12px;
+    margin-bottom: 4px;
+    font-size: 15px;
+}
+
+/* AI bubble */
+.chat-ai {
+    background: var(--chat-ai-bg);
+    color: var(--chat-ai-text);
+    padding: 10px 14px;
+    border-radius: 12px;
+    margin-bottom: 12px;
+    font-size: 15px;
+    border: 1px solid rgba(255,255,255,0.15);
+}
+
+</style>
+""", unsafe_allow_html=True)
+
