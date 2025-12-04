@@ -1,5 +1,5 @@
 # 🫀 Healthcare Project: Indicators of Heart Disease (2022 Update)
-
+## live view https://health-care-project.streamlit.app/
 ## 📊 1. Dataset Description
 
 This project uses the **“Indicators of Heart Disease (2022 Update)”** dataset.  
@@ -122,6 +122,111 @@ Prepared the dataset for modeling:
 - [Scikit-learn](https://scikit-learn.org/)
 
 --
+# 🤖 4. Machine Learning Modeling (Extended Version)
+
+After preparing the dataset through cleaning, encoding, scaling, and balancing, we developed a complete **ML pipeline** to predict heart-related outcomes such as `HadHeartAttack`.
+
+---
+
+## 🔍 Modeling Objectives
+
+- Identify the **best-performing algorithm**  
+- Build a **stable and generalizable** prediction model  
+- Improve **classification performance** on imbalanced classes  
+- Achieve high **accuracy** and **recall** to minimize false negatives  
+
+---
+
+## 🔧 Algorithms Used
+
+We experimented with several supervised classification algorithms:
+
+| Model | Notes |
+|-------|-------|
+| **Logistic Regression** | Baseline model, good interpretability |
+| **Random Forest Classifier** | Handles non-linearity well |
+| **XGBoost Classifier** | Best performance, robust with imbalanced data |
+
+---
+
+## ⚙️ Modeling Pipeline
+
+1. **Split Dataset**  
+   - 80% training, 20% testing  
+
+2. **Train Models**  
+   - Fit each model on balanced training data  
+
+3. **Hyperparameter Tuning**  
+   - GridSearchCV for Random Forest & XGBoost  
+
+4. **Evaluate Models**  
+   - Accuracy, Precision, Recall, F1-score  
+
+5. **Visualize**  
+   - Confusion Matrix  
+   - ROC-AUC Curve  
+
+6. **Save Best Model**  
+   - Exported using **Joblib**  
+
+**Best Model:** **XGBoost Classifier**
+
+---
+
+# ☁️ 5. Streamlit Deployment (Extended Version)
+
+After finalizing the ML model, we deployed the system using **Streamlit**, enabling **real-time heart-risk predictions** through an interactive web interface.
+
+---
+
+## 🖥️ Why Streamlit?
+
+- Lightweight and easy to deploy  
+- Real-time predictions  
+- Simple UI for non-technical users  
+- Built for ML model deployment  
+
+---
+
+## 🧪 Streamlit Features
+
+### 1️⃣ Real-Time Prediction
+
+Users enter their health indicators such as:
+
+- **Age**  
+- **BMI**  
+- **Physical Activity**  
+- **Smoking Status**  
+- **Chronic Conditions**  
+
+Streamlit processes the input → sends it to the **XGBoost model** → returns the risk result instantly.
+
+---
+
+### 2️⃣ Dynamic Visualization
+
+- Shows charts and insights directly inside the app  
+- Helps users understand the **impact of each feature**  
+
+---
+
+### 3️⃣ Chatbot Integration (Gemini API)
+
+We added a built-in chatbot that helps users:
+
+- Understand medical terms  
+- Interpret prediction results  
+- Ask health-related questions  
+
+**Example Questions:**
+
+- “What does BMI mean?”  
+- “Is smoking affecting my risk?”  
+- “Why is my result high?”  
+
+The chatbot responds using the **Google Gemini API**.
 
 
 ## 📌 Team
