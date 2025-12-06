@@ -12,7 +12,7 @@ try:
 except:
     HAVE_GENAI = False
 
-GENAI_API_KEY = os.getenv("GENAI_API_KEY", "AIzaSyCK68wrJ2PZCtkryz7KDcv7GdLYt0lHbHU")
+GENAI_API_KEY = os.getenv("GENAI_API_KEY", "AIzaSyBk04JZz8v9tAMAhdp9C2a5fMuLpYijE6I")
 if GENAI_API_KEY and HAVE_GENAI:
     try:
         client = genai.Client(api_key=GENAI_API_KEY)
@@ -460,4 +460,5 @@ st.markdown("""
 
 </style>
 """, unsafe_allow_html=True)
+
 
